@@ -1,6 +1,8 @@
 import unittest
 
+
 from table_helper import TableHelper
+from table import Table
 
 class TestTableHelper(unittest.TestCase):
     def setUp(self):
@@ -167,6 +169,27 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(11, table.right)
         self.assertEqual(52, table.bottom)
 
+    def test_get_content_from_sheet(self):
+        sheet = self.table_helper.open_file('tests/example_2.xlsx')
+
+        table = Table()
+        table.top = 2
+        table.left = 4
+        table.right = 9
+        table.bottom = 18
+
+        content = self.table_helper.get_content_from_sheet(sheet, table)
+        self.assertEqual('BALANCE SHEET', content[0][0])
+        self.assertEqual('Cash & Due from Banks', content[1][0])
+        self.assertEqual('Liabilities + Equity', content[-2][0])
+
+        #print(f"=== content: {content}")
+
+    def test_get_csv_for_table_content(self):
+        result = self.table_helper.get_csv_for_table_content([[1,2], [3,4]])
+        print(f"== result: {result}")
+        self.assertEqual('1,2', result.splitlines()[0])
+        self.assertEqual('3,4', result.splitlines()[1])
 
 if __name__ == '__main__':
     unittest.main()

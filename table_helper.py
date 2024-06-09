@@ -1,6 +1,9 @@
 from table import Table
 from openpyxl import load_workbook
 
+import csv
+import io
+
 class TableHelper:
     HEADER_COLOR_INDEX = 4
     def __init__(self):
@@ -97,7 +100,7 @@ class TableHelper:
                     break
                 #print(f"cell: {cell.value}, i: {i}, j: {j}, {row[j].value}")
                 if(self.is_table_top_left(sheet, i, j)):
-                    table = Table([[]])
+                    table = Table()
                     print(f"=== found table top left: column: {cell.column}, row: {cell.row}, value: {cell.value}")
                     table.name = cell.value
                     table.left = cell.column - 1
@@ -137,13 +140,26 @@ class TableHelper:
         print("=== done")
 
 
+    def get_content_from_sheet(self, sheet, table):
+        result = []
+        rows = list(sheet.iter_rows())
 
+        # 向下多来一行，向右多来一行，为了兼容sheet2
+        for i in range(table.top, table.bottom + 2):
+            temp_row = []
+            for j in range(table.left, table.right + 2):
+                #print(f"=== i:{i}, j:{j}, value: {rows[i][j].value}")
+                temp_row.append(rows[i][j].value)
 
+            result.append(temp_row)
 
+        return result
 
+    def get_csv_for_table_content(self, content):
 
+        sio = io.StringIO()
+        writer = csv.writer(sio)
+        writer.writerows(content)
 
-
-
-
-
+        csv_string = sio.getvalue()
+        return csv_string
