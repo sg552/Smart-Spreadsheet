@@ -105,7 +105,7 @@ class TableHelper:
                     self.tables.append(table)
 
         for table in self.tables:
-            print(f"==checking for table: {table}")
+            #print(f"==checking for table: {table}")
             # get all tables top right , 只考察一行即可( table.top)
             target_row = list(sheet.iter_rows())[table.top]
             for cell in target_row:
@@ -127,7 +127,7 @@ class TableHelper:
                     break
                 target_column.append(row[table.left])
 
-            print(f"==checking for bottom_left: {target_column}")
+            #print(f"==checking for bottom_left: {target_column}")
             for cell in target_column:
                 if self.is_table_bottom_left(sheet, cell.row - 1, cell.column - 1):
                     #print(f"=== found bottom, cell: #{cell.value}")

@@ -89,19 +89,52 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(True, self.table_helper.is_table_bottom_left(sheet, 50, 4 ))
         self.assertEqual(True, self.table_helper.is_table_bottom_left(sheet, 52, 8 ))
 
-    def test_get_tables(self):
+    def test_get_tables_for_example0(self):
 
-        #sheet = self.table_helper.open_file('tests/example_0.xlsx')
-        #self.table_helper.get_tables(sheet)
-        #print(f"==  tables: {self.table_helper.tables}")
-        #self.assertEqual(8, len(self.table_helper.tables))
+        ## 对于example0, 只看第一个和最后一个table就可以了。
+        sheet = self.table_helper.open_file('tests/example_0.xlsx')
+        self.table_helper.get_tables(sheet)
+        print(f"==  tables: {self.table_helper.tables}")
+        self.assertEqual(8, len(self.table_helper.tables))
 
-        #sheet = self.table_helper.open_file('tests/example_1.xlsx')
-        #self.table_helper.get_tables(sheet)
-        #for table in self.table_helper.tables:
-        #    print(f"==  table: top: {table.top}, left: {table.left}, right: {table.right}, bottom: {table.bottom}, name: {table.name}")
-        #self.assertEqual(4, len(self.table_helper.tables))
+        table = self.table_helper.tables[0]
+        self.assertEqual('BALANCE SHEET', table.name)
+        self.assertEqual(0, table.top)
+        self.assertEqual(2, table.left)
+        self.assertEqual(7, table.right)
+        self.assertEqual(16, table.bottom)
 
+        table = self.table_helper.tables[-1]
+        self.assertEqual(None, table.name)
+        self.assertEqual(83, table.top)
+        self.assertEqual(2, table.left)
+        self.assertEqual(5, table.right)
+        self.assertEqual(93, table.bottom)
+
+    def test_get_tables_for_example1(self):
+
+        # 对于example1, 只看第一个和最后一个table就可以了。
+        sheet = self.table_helper.open_file('tests/example_1.xlsx')
+        self.table_helper.get_tables(sheet)
+        self.assertEqual(4, len(self.table_helper.tables))
+
+        table = self.table_helper.tables[0]
+        self.assertEqual('BALANCE SHEET', table.name)
+        self.assertEqual(2, table.top)
+        self.assertEqual(4, table.left)
+        self.assertEqual(9, table.right)
+        self.assertEqual(18, table.bottom)
+
+        table = self.table_helper.tables[-1]
+        self.assertEqual(None, table.name)
+        self.assertEqual(44, table.top)
+        self.assertEqual(8, table.left)
+        self.assertEqual(11, table.right)
+        self.assertEqual(54, table.bottom)
+
+
+    def test_get_tables_for_example2(self):
+        # 对于example2, 查看所有
         sheet = self.table_helper.open_file('tests/example_2.xlsx')
         self.table_helper.get_tables(sheet)
         self.assertEqual(4, len(self.table_helper.tables))
@@ -131,7 +164,7 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(None, table.name)
         self.assertEqual(42, table.top)
         self.assertEqual(8, table.left)
-        self.assertEqual(10, table.right)
+        self.assertEqual(11, table.right)
         self.assertEqual(52, table.bottom)
 
 
