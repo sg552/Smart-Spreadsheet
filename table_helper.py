@@ -32,7 +32,7 @@ class TableHelper:
     # 可以向下连续一行
     def is_table_top_left(self, sheet, i, j):
         rows = list(sheet.iter_rows())
-        print(f"== cell: {rows[i][j]}, value: {rows[i][j].value}")
+        #print(f"== cell: {rows[i][j]}, value: {rows[i][j].value}")
         if (j == 0 and self.is_table_header(rows[i][j]) ) or \
                 (j == 1 and self.is_table_header(rows[i][j]) and  rows[i][j - 1].value == None)  or \
                 (j >= 2 and self.is_table_header(rows[i][j]) and rows[i][j - 2].value == None and rows[i][j - 1].value == None) or \
@@ -41,10 +41,8 @@ class TableHelper:
             if i == 0:
                 return True
             else:
-                print("222")
                 return not self.is_table_header(rows[i-1][j])
         else:
-            print("333")
             return False
 
     # 右边两个肯定都是空白, 可能一行存在多个。找到立刻return
@@ -63,13 +61,15 @@ class TableHelper:
     def is_table_bottom_left(self, sheet, i, j):
         rows = list(sheet.iter_rows())
 
-        #print(f"== checking: {rows[i][j]}, value: {rows[i][j].value}")
+        #print(f"== checking: {rows[i][j]}, value: {rows[i][j].value}, +1: {rows[i+1][j].value}, +2: {rows[i+2][j].value}")
 
         # case1: 本身是str, 下面有2个空白行，一定是结束
+        # 或者有个 0
         if self.is_my_string(rows[i][j].value)  and \
                 (rows[i+1][j].value == None) and \
-                (rows[i+2][j].value == None) :
+                (rows[i+2][j].value == None or rows[i+2][j].value == 0) :
             return True
+
         # case2: 本身是str,下面有一个空白行，外加一个带颜色的cell
         if self.is_my_string(rows[i][j].value)  and \
                 (rows[i+1][j].value == None) and \
