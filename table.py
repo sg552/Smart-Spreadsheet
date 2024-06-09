@@ -5,6 +5,7 @@ class Table:
         self.left = 0
         self.right = 0
         self.bottom = 0
+        self.name = ''
 
 
     def to_text(self):

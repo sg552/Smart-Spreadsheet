@@ -18,6 +18,10 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(False, self.table_helper.is_table_top_left(sheet, 74-1, 3-1))
         self.assertEqual(True, self.table_helper.is_table_top_left(sheet, 84-1, 3-1))
 
+
+        self.assertEqual(False, self.table_helper.is_table_top_left(sheet, 50, 6))
+        self.assertEqual(False, self.table_helper.is_table_top_left(sheet, 50, 7))
+
         sheet = self.table_helper.open_file('tests/example_1.xlsx')
         self.assertEqual(True, self.table_helper.is_table_top_left(sheet, 2, 4))
         self.assertEqual(True, self.table_helper.is_table_top_left(sheet, 21, 2))
@@ -85,11 +89,51 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(True, self.table_helper.is_table_bottom_left(sheet, 50, 4 ))
         self.assertEqual(True, self.table_helper.is_table_bottom_left(sheet, 52, 8 ))
 
-    #def test_get_single_table(self):
+    def test_get_tables(self):
 
-    #    sheet = self.table_helper.open_file('tests/example_0.xlsx')
-    #    table = self.table_helper.get_single_table(sheet)
-        #self.assertEqual(matrix1, table.data)
+        #sheet = self.table_helper.open_file('tests/example_0.xlsx')
+        #self.table_helper.get_tables(sheet)
+        #print(f"==  tables: {self.table_helper.tables}")
+        #self.assertEqual(8, len(self.table_helper.tables))
+
+        #sheet = self.table_helper.open_file('tests/example_1.xlsx')
+        #self.table_helper.get_tables(sheet)
+        #for table in self.table_helper.tables:
+        #    print(f"==  table: top: {table.top}, left: {table.left}, right: {table.right}, bottom: {table.bottom}, name: {table.name}")
+        #self.assertEqual(4, len(self.table_helper.tables))
+
+        sheet = self.table_helper.open_file('tests/example_2.xlsx')
+        self.table_helper.get_tables(sheet)
+        self.assertEqual(4, len(self.table_helper.tables))
+
+        table = self.table_helper.tables[0]
+        self.assertEqual('BALANCE SHEET', table.name)
+        self.assertEqual(2, table.top)
+        self.assertEqual(4, table.left)
+        self.assertEqual(9, table.right)
+        self.assertEqual(18, table.bottom)
+
+        table = self.table_helper.tables[1]
+        self.assertEqual('INCOME STATEMENT', table.name)
+        self.assertEqual(20, table.top)
+        self.assertEqual(2, table.left)
+        self.assertEqual(7, table.right)
+        self.assertEqual(38, table.bottom)
+
+        table = self.table_helper.tables[2]
+        self.assertEqual('SHAREHOLDERS (Fully Diluted)', table.name)
+        self.assertEqual(40, table.top)
+        self.assertEqual(4, table.left)
+        self.assertEqual(6, table.right)
+        self.assertEqual(50, table.bottom)
+
+        table = self.table_helper.tables[3]
+        self.assertEqual(None, table.name)
+        self.assertEqual(42, table.top)
+        self.assertEqual(8, table.left)
+        self.assertEqual(10, table.right)
+        self.assertEqual(52, table.bottom)
+
 
 if __name__ == '__main__':
     unittest.main()
