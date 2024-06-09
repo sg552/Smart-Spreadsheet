@@ -26,6 +26,15 @@ class TestTableHelper(unittest.TestCase):
         self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 1-1, 7 ))
         self.assertEqual(False, self.table_helper.is_table_top_right(sheet, 1-1, 8 ))
 
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 19-1, 7 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 39-1, 4 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 51-1, 7 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 62-1, 7 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 67-1, 7 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 73-1, 7 ))
+        self.assertEqual(False, self.table_helper.is_table_top_right(sheet, 74-1, 7 ))
+        self.assertEqual(True, self.table_helper.is_table_top_right(sheet, 84-1, 5 ))
+
     #def test_get_single_table(self):
 
     #    sheet = self.table_helper.open_file('tests/example_0.xlsx')

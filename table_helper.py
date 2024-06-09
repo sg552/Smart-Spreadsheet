@@ -65,15 +65,16 @@ class TableHelper:
                 if(self.is_table_top_left(sheet, i, j)):
                     table = Table([[]])
                     print(f"=== found table top left: column: {cell.column}, row: {cell.row}")
-                    table.left = cell.column
-                    table.top = cell.row
+                    table.left = cell.column - 1
+                    table.top = cell.row - 1
                     self.tables.append(table)
 
         # get all tables top right
-        #for table in self.tables:
-        #    target_row = list(sheet.iter_rows())[table.top - 1]
-        #    for i, cell in target_row:
-        #        self.is_table_top_right(target_row, i):
+        for table in self.tables:
+            target_row = list(sheet.iter_rows())[table.top]
+            for j, cell in target_row:
+                if self.is_table_top_right(sheet, table.top, j):
+                    table.right = cell.column
 
 
 
