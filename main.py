@@ -3,8 +3,6 @@ from table_helper import TableHelper
 import time
 from pathlib import Path
 
-AI_API_KEY = 'sk-33KKyUO0tKNxch5RHxa5ELH50BHduZFmgyns6nrR8Fii3l9X'
-
 client = OpenAI(
     api_key = 'sk-33KKyUO0tKNxch5RHxa5ELH50BHduZFmgyns6nrR8Fii3l9X',
     base_url = "https://api.moonshot.cn/v1",
