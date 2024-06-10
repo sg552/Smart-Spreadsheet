@@ -11,3 +11,7 @@ pip install openai
 ## run
 
 python main.py
+
+## run unit test
+
+python test_table_helper.py
