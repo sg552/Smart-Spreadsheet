@@ -3,9 +3,12 @@ from openpyxl import load_workbook
 
 import csv
 import io
+from openai import OpenAI
 
 class TableHelper:
     HEADER_COLOR_INDEX = 4
+    AI_API_KEY = 'sk-33KKyUO0tKNxch5RHxa5ELH50BHduZFmgyns6nrR8Fii3l9X'
+
     def __init__(self):
         self.max_blank_column = 1
         self.max_blank_row = 1
@@ -163,3 +166,10 @@ class TableHelper:
 
         csv_string = sio.getvalue()
         return csv_string
+
+    def save_as_csv(self, filename, content):
+
+        writer = csv.writer(open(filename, 'w'))
+        for row in content:
+            writer.writerow(row)
+
